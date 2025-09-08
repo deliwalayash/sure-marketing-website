@@ -15,166 +15,16 @@
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./contact.css">
     <link rel="icon" type="image/png" href="./images/Untitled design.png">
+    <link rel="stylesheet" href="./style.css">
 
 </head>
 <body>
 
-    <style>
-        :root {
-    --primary-red: #e53e3e;
-    --dark-red: #c53030;
-    --light-red: #feb2b2;
-    --white: #ffffff;
-    --light-gray: #f7fafc;
-    --text-dark: #2d3748;
-    --text-gray: #4a5568;
-}
-
-/* Specific styles for the Contact page */
-
-/* Contact Hero Section */
-.contact-hero-section {
-     background: linear-gradient(135deg, var(--primary-red) 0%), url('https://images.unsplash.com/photo-1542385172-27352345638c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1400&q=80') no-repeat center center/cover;
-    height: 400px;
-    padding-top: 120px;
-}
-
-.contact-hero-section .hero-title {
-    color: var(--white);
-    font-weight: 700;
-}
-
-.contact-hero-section .hero-subtitle {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 1.25rem;
-}
-
-/* Main Contact Section */
-.main-contact-section {
-    background-color: var(--light-gray);
-    padding: 100px 0;
-}
-
-.contact-form-container {
-    background-color: var(--white);
-    border-radius: 20px;
-    padding: 2.5rem;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    height: 100%;
-}
-
-.contact-form-container .form-title {
-    font-size: 2.25rem;
-    font-weight: 700;
-    color: var(--primary-red);
-    margin-bottom: 0.5rem;
-}
-
-.contact-form-container .form-subtitle {
-    color: var(--text-gray);
-    font-size: 1.1rem;
-    margin-bottom: 2rem;
-}
-
-.contact-form-container .form-label {
-    font-weight: 500;
-    color: var(--text-dark);
-}
-
-.contact-form-container .form-control {
-    border-radius: 10px;
-    padding: 0.75rem 1rem;
-    border: 1px solid #ddd;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.contact-form-container .form-control:focus {
-    border-color: var(--primary-red);
-    box-shadow: 0 0 0 0.25rem rgba(229, 62, 62, 0.25);
-}
-
-.contact-info-map-container {
-    display: flex;
-    flex-direction: column;
-}
-
-.contact-info {
-    background-color: var(--white);
-    border-radius: 20px;
-    padding: 2.5rem;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    margin-bottom: 2rem;
-}
-
-.contact-info .info-title {
-    font-size: 2rem;
-    font-weight: 600;
-    color: var(--primary-red);
-    margin-bottom: 1.5rem;
-}
-
-.contact-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 2rem;
-}
-
-.contact-icon {
-    width: 50px;
-    height: 50px;
-    background: var(--primary-red);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    margin-right: 1rem;
-    font-size: 1.2rem;
-}
-
-.contact-item h5 {
-    font-weight: 600;
-    color: var(--text-dark);
-    margin-bottom: 0.25rem;
-}
-
-.map-container {
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    height: 400px;
-}
-
-.map-container iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-}
-
-/* Responsive adjustments for mobile devices */
-@media (max-width: 991.98px) {
-    .main-contact-section {
-        padding: 60px 0;
-    }
-
-    .contact-form-container {
-        padding: 1.5rem;
-    }
-
-    .contact-info {
-        padding: 1.5rem;
-        margin-top: 2rem;
-    }
-
-    .map-container {
-        height: 300px;
-    }
-}
-    </style>
+   
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#home">
-                <i class="fas fa-rocket"></i> Sure Marketing
+            <a class="navbar-brand fs-1" href="#home" >
+                Sure Marketing
             </a>
             
             <button class="btn btn-danger d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
@@ -193,7 +43,7 @@
                         <a class="nav-link" href="index.html#about">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="contact.html">Contact</a>
+                        <a class="nav-link active" href="./contact.html">Contact</a>
                     </li>
                 </ul>
                 <a href="contact.html" class="btn btn-primary ms-3">Get Quote</a>
@@ -220,11 +70,11 @@
                     <a class="nav-link" href="index.html#about" data-bs-dismiss="offcanvas">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="contact.html" data-bs-dismiss="offcanvas">Contact</a>
+                    <a class="nav-link active" href="./contact.html" data-bs-dismiss="offcanvas">Contact</a>
                 </li>
             </ul>
             <div class="mt-4">
-                <a href="contact.html" class="btn btn-primary w-100" data-bs-dismiss="offcanvas">Get Quote</a>
+                <a href="./contact.html" class="btn btn-primary w-100" data-bs-dismiss="offcanvas">Get Quote</a>
             </div>
         </div>
     </div>
@@ -245,7 +95,8 @@
                     <div class="contact-form-container p-4">
                         <h2 class="form-title">Send us a Message</h2>
                         <p class="form-subtitle">We'll get back to you within 24-48 hours.</p>
-                        <form action="submit_form.php" method="POST">
+                        <form action="https://api.web3forms.com/submit" method="POST">
+                              <input type="hidden" name="access_key" value="104e434f-e572-4313-958e-5d00f7e42adb">
                             <div class="mb-3">
                                 <label for="name" class="form-label">Full Name</label>
                                 <input type="text" class="form-control" id="name" name="name" required>
@@ -268,6 +119,10 @@
                             </div>
                             <button type="submit" class="btn btn-primary w-100">Submit Message</button>
                         </form>
+                        <!-- Thank you message (hidden by default) -->
+<div id="thankYouMessage" class="alert alert-success mt-3" style="display: none;">
+  ✅ Thank you! Your message has been sent successfully.
+</div>
                     </div>
                 </div>
                 
@@ -311,7 +166,6 @@
             <div class="row">
                 <div class="col-lg-4 col-md-6 mb-4">
                     <h5>
-                        <img src="./images/Untitled design (2).png" alt="Sure Marketing Logo" style="height: 35px; width: auto; margin-right: 0.5rem;">
                         Sure Marketing
                     </h5>
                     <p>
@@ -395,6 +249,33 @@
             <i class="fas fa-phone"></i>
         </a>
     </div>
+
+    <script>
+document.getElementById("contactForm").addEventListener("submit", async function(e) {
+  e.preventDefault(); // prevent default form submit
+  const form = e.target;
+  const data = new FormData(form);
+
+  try {
+    let response = await fetch(form.action, {
+      method: form.method,
+      body: data,
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+
+    if (response.ok) {
+      form.reset(); // clear form
+      document.getElementById("thankYouMessage").style.display = "block"; // show success
+    } else {
+      alert("Oops! Something went wrong. Try again.");
+    }
+  } catch (error) {
+    alert("Error sending message. Please try again later.");
+  }
+});
+</script>
 
 </body>
 </html>
