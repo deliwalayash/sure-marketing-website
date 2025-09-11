@@ -318,7 +318,32 @@
             </div>
         </div>
     </section>
-    
+
+    <!-- model -->
+ <div class="modal fade" id="discountModal" tabindex="-1" aria-labelledby="discountModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content text-center p-4">
+            <div class="modal-header border-0">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-icon mb-3">
+                    <i class="fas fa-gift"></i>
+                </div>
+                <h2 class="modal-title" id="discountModalLabel">Special Offer!</h2>
+                <p class="modal-text">
+                    Get an exclusive <span class="fw-bold">10% discount</span> on your first digital marketing service.
+                </p>
+                <p class="modal-text mb-4">
+                    Don't miss out on this limited-time opportunity to boost your business!
+                </p>
+                <a href="./contact.html" class="btn btn-primary w-100">
+                    Contact Now
+                </a>
+            </div>
+        </div>
+    </div>
+</div>    
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
@@ -419,6 +444,25 @@
         window.addEventListener('load', function() {
             document.body.classList.add('loaded');
         });
+
+        // Function to show the modal
+function showDiscountModal() {
+    const hasVisited = sessionStorage.getItem('visited');
+    
+    // Show the modal only if the user hasn't visited before in this session
+    if (!hasVisited) {
+        const myModal = new bootstrap.Modal(document.getElementById('discountModal'));
+        myModal.show();
+        // Set a flag in sessionStorage to prevent it from showing again
+        sessionStorage.setItem('visited', 'true');
+    }
+}
+
+// Show the modal after the page has loaded
+window.addEventListener('load', function() {
+    // You can delay the modal slightly for better user experience
+    setTimeout(showDiscountModal, 1500); 
+});
     </script>
 
     <script>
