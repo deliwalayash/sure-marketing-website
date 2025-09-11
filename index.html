@@ -67,16 +67,16 @@
         <div class="offcanvas-body">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#home" data-bs-dismiss="offcanvas">Home</a>
+                    <a class="nav-link" href="./index.html" >Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="./services.html" data-bs-dismiss="offcanvas">Services</a>
+                    <a class="nav-link" href="./services.html" >Services</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="./about.html" data-bs-dismiss="offcanvas">About</a>
+                    <a class="nav-link" href="./about.html" >About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="./contact.html" data-bs-dismiss="offcanvas">Contact</a>
+                    <a class="nav-link" href="./contact.html">Contact</a>
                 </li>
             </ul>
             <div class="mt-4">
@@ -383,9 +383,23 @@
         </div>
     </footer>
     
+
+
+ 
+
+    <div class="floating-buttons">
+    <a href="https://wa.me/919712952456" target="_blank" class="whatsapp-btn" title="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+    <a href="tel:+919712952456" class="call-btn" title="Call Now">
+        <i class="fas fa-phone"></i>
+    </a>
+</div>
+
     <!-- Bootstrap JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <!-- AOS Animation JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+   <!-- AOS Animation JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     
     <script>
@@ -407,13 +421,10 @@
         });
     </script>
 
-    <div class="floating-buttons">
-    <a href="https://wa.me/919712952456" target="_blank" class="whatsapp-btn" title="Chat on WhatsApp">
-        <i class="fab fa-whatsapp"></i>
-    </a>
-    <a href="tel:+919712952456" class="call-btn" title="Call Now">
-        <i class="fas fa-phone"></i>
-    </a>
-</div>
+    <script>
+document.querySelectorAll("a").forEach(a => {
+  console.log("Link:", a.outerHTML);
+});
+</script>
 </body>
 </html>
