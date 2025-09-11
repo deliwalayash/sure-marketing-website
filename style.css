@@ -9,9 +9,9 @@
             --text-gray: #4a5568;
         }
         html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 80px; /* match your navbar height */
-}
+         scroll-behavior: smooth;
+          scroll-padding-top: 80px; /* match your navbar height */
+        }
         
         * {
             margin: 0;
