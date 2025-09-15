@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Redirecting...</title>
+  <script>
+    // get current path
+    const path = window.location.pathname.toLowerCase();
+
+    // redirect rules
+    if (path.includes("about-us")) {
+      window.location.href = "/about.html";
+    } else if (path.includes("the-best-digital-marketing-agency-in-surat-your-guide")) {
+      window.location.href = "/";
+    } else {
+      document.write("<h2>404 - Page Not Found</h2>");
+    }
+  </script>
+</head>
+<body>
+</body>
+</html>
