@@ -50,6 +50,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="./contact.html">Contact</a>
                     </li>
+                    
                 </ul>
                 <a href="#contact" class="btn btn-primary ms-3">Get Quote</a>
             </div>
@@ -249,6 +250,30 @@
         </div>
     </section>
     
+    <!-- Our Expertise Section -->
+    <section class="services-section bg-white border-top">
+        <div class="container text-center" data-aos="fade-up">
+            <h2 class="section-title">Our Expertise</h2>
+            <p class="section-subtitle">Specialized solutions for local market growth</p>
+            <div class="row justify-content-center mt-4">
+                <div class="col-lg-6 mb-4">
+                    <div class="service-card p-4">
+                        <h4 class="mb-3">Google Ads Agency in Surat</h4>
+                        <p class="mb-4 text-muted">Drive targeted traffic and generate quality leads for your business in the Surat region.</p>
+                        <a href="./google-ads-agency-surat.html" class="btn btn-primary">Learn More</a>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <div class="service-card p-4">
+                        <h4 class="mb-3">Free Google Review Generator</h4>
+                        <p class="mb-4 text-muted">Generate high-quality Google reviews instantly using AI to boost your local reputation.</p>
+                        <a href="./google-review-generator.html" class="btn btn-primary">Try Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact Section -->
     <section id="contact" class="contact-section">
         <div class="container">
@@ -396,6 +421,8 @@
                         <li><a href="./portfolio.html">Portfolio</a></li>
                         <li><a href="./price-list.html">Price List</a></li>
                         <li><a href="./testimonials.html">Testimonials</a></li>
+                        <li><a href="./google-ads-agency-surat.html">Google Ads Agency Surat</a></li>
+                        <li><a href="./google-review-generator.html">Review Generator</a></li>
                         <li><a href="./privacy-policy.html">Privacy Policy</a></li>
                     </ul>
                 </div>
@@ -445,23 +472,7 @@
         });
 
         // Function to show the modal
-function showDiscountModal() {
-    const hasVisited = sessionStorage.getItem('visited');
-    
-    // Show the modal only if the user hasn't visited before in this session
-    if (!hasVisited) {
-        const myModal = new bootstrap.Modal(document.getElementById('discountModal'));
-        myModal.show();
-        // Set a flag in sessionStorage to prevent it from showing again
-        sessionStorage.setItem('visited', 'true');
-    }
-}
 
-// Show the modal after the page has loaded
-window.addEventListener('load', function() {
-    // You can delay the modal slightly for better user experience
-    setTimeout(showDiscountModal, 1500); 
-});
     </script>
 
     <script>
