@@ -7,7 +7,7 @@ export async function POST(req) {
     const { name, email, role } = await req.json();
 
     await resend.emails.send({
-      from: "Sure Marketing <onboarding@resend.dev>",
+      from: process.env.RESEND_FROM_EMAIL || "Sure Marketing <onboarding@resend.dev>",
       to: email,
       subject: `Application Received – ${role} | Sure Marketing`,
       html: `

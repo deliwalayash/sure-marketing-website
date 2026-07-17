@@ -32,7 +32,7 @@ export async function POST(req) {
 
     // Send OTP email
     const { error: emailError } = await resend.emails.send({
-      from: "Sure Marketing <onboarding@resend.dev>",
+      from: process.env.RESEND_FROM_EMAIL || "Sure Marketing <onboarding@resend.dev>",
       to: email,
       subject: "Your OTP for Sure Marketing Application",
       html: `

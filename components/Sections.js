@@ -26,8 +26,8 @@ export function Hero() {
             Performance Marketing That Delivers
           </div>
           <h1>
-            We design growth systems that look sharp and{" "}
-            <span className="gradient-text">sell smarter.</span>
+            Top Digital{" "}
+            <span className="gradient-text">Marketing Agency.</span>
           </h1>
           <p>
             Sure Marketing blends performance ads, conversion-focused websites, SEO, and content into one premium
