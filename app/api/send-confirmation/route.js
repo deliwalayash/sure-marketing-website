@@ -1,13 +1,19 @@
-import { Resend } from "resend";
+import nodemailer from "nodemailer";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_APP_PASSWORD,
+  },
+});
 
 export async function POST(req) {
   try {
     const { name, email, role } = await req.json();
 
-    await resend.emails.send({
-      from: process.env.RESEND_FROM_EMAIL || "Sure Marketing <onboarding@resend.dev>",
+    await transporter.sendMail({
+      from: `"Sure Marketing" <${process.env.GMAIL_USER}>`,
       to: email,
       subject: `Application Received – ${role} | Sure Marketing`,
       html: `
@@ -49,6 +55,6 @@ export async function POST(req) {
     return Response.json({ success: true });
   } catch (err) {
     console.error("send-confirmation error:", err);
-    return Response.json({ error: "Failed to send confirmation email." }, { status: 500 });
+    return Response.json({ error: "Failed to send confirmation email.", details: err.message || String(err) }, { status: 500 });
   }
 }

@@ -1,12 +1,18 @@
-import { Resend } from "resend";
+import nodemailer from "nodemailer";
 import { createClient } from "@supabase/supabase-js";
-
-const resend = new Resend(process.env.RESEND_API_KEY);
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 );
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_APP_PASSWORD,
+  },
+});
 
 export async function POST(req) {
   try {
@@ -30,9 +36,9 @@ export async function POST(req) {
 
     if (dbError) throw dbError;
 
-    // Send OTP email
-    const { error: emailError } = await resend.emails.send({
-      from: process.env.RESEND_FROM_EMAIL || "Sure Marketing <onboarding@resend.dev>",
+    // Send OTP email via Gmail SMTP
+    await transporter.sendMail({
+      from: `"Sure Marketing" <${process.env.GMAIL_USER}>`,
       to: email,
       subject: "Your OTP for Sure Marketing Application",
       html: `
@@ -50,11 +56,9 @@ export async function POST(req) {
       `
     });
 
-    if (emailError) throw emailError;
-
     return Response.json({ success: true });
   } catch (err) {
     console.error("send-otp error:", err);
-    return Response.json({ error: "Failed to send OTP. Please try again." }, { status: 500 });
+    return Response.json({ error: "Failed to send OTP. Please try again.", details: err.message || String(err), stack: err.stack }, { status: 500 });
   }
 }

@@ -21,6 +21,7 @@ async function getBlogs() {
     .from("blogs")
     .select("id, title, slug, category, excerpt, created_at")
     .eq("published", true)
+    .lte("created_at", new Date().toISOString())
     .order("created_at", { ascending: false });
   return data || [];
 }

@@ -94,9 +94,9 @@ function ApplicationsTab() {
       </div>
       {applications.map((app) => (
         <div key={app.id} style={rowStyle}>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: "1rem", marginBottom: "0.75rem" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "1rem", marginBottom: "0.75rem" }}>
             <div><span style={metaLabel}>Name</span><span style={metaValue}>{app.name}</span></div>
-            <div><span style={metaLabel}>Email</span><a href={`mailto:${app.email}`} style={{ ...metaValue, color: "var(--accent)" }}>{app.email}</a></div>
+            <div><span style={metaLabel}>Email</span><a href={`mailto:${app.email}`} style={{ ...metaValue, color: "var(--accent)", wordBreak: "break-all" }}>{app.email}</a></div>
             <div><span style={metaLabel}>Phone</span><span style={metaValue}>{app.phone || "—"}</span></div>
             <div><span style={metaLabel}>Role</span><span style={metaValue}>{app.role}</span></div>
             <div><span style={metaLabel}>Experience</span><span style={metaValue}>{app.experience_level ? app.experience_level.charAt(0).toUpperCase() + app.experience_level.slice(1) : "—"}</span></div>
@@ -123,6 +123,8 @@ function BlogsTab() {
   const [editing, setEditing] = useState(null); // blog object or null
   const [saving, setSaving] = useState(false);
   const [form, setForm] = useState({ title: "", slug: "", category: "", excerpt: "", content: "", published: false });
+  const [publishType, setPublishType] = useState("publish_now"); // publish_now | schedule | draft
+  const [scheduleDate, setScheduleDate] = useState("");
 
   async function fetchBlogs() {
     setFetching(true);
@@ -136,12 +138,28 @@ function BlogsTab() {
   function openNew() {
     setEditing(null);
     setForm({ title: "", slug: "", category: "", excerpt: "", content: "", published: false });
+    setPublishType("publish_now");
+    setScheduleDate("");
     setShowForm(true);
   }
 
   function openEdit(blog) {
     setEditing(blog);
     setForm({ title: blog.title, slug: blog.slug, category: blog.category || "", excerpt: blog.excerpt || "", content: blog.content || "", published: blog.published });
+    if (!blog.published) {
+      setPublishType("draft");
+      setScheduleDate("");
+    } else {
+      const isFuture = new Date(blog.created_at) > new Date();
+      if (isFuture) {
+        setPublishType("schedule");
+        const localDate = new Date(new Date(blog.created_at).getTime() - new Date().getTimezoneOffset() * 60000);
+        setScheduleDate(localDate.toISOString().slice(0, 16));
+      } else {
+        setPublishType("publish_now");
+        setScheduleDate("");
+      }
+    }
     setShowForm(true);
   }
 
@@ -157,10 +175,31 @@ function BlogsTab() {
   async function handleSave(e) {
     e.preventDefault();
     setSaving(true);
+    const isPublished = publishType !== "draft";
+    const payload = {
+      title: form.title,
+      slug: form.slug,
+      category: form.category || null,
+      excerpt: form.excerpt || null,
+      content: form.content || null,
+      published: isPublished
+    };
+    if (publishType === "publish_now") {
+      if (!editing || new Date(editing.created_at) > new Date()) {
+        payload.created_at = new Date().toISOString();
+      }
+    } else if (publishType === "schedule") {
+      if (!scheduleDate) {
+        alert("Please select a date and time for scheduling.");
+        setSaving(false);
+        return;
+      }
+      payload.created_at = new Date(scheduleDate).toISOString();
+    }
     if (editing) {
-      await supabase.from("blogs").update(form).eq("id", editing.id);
+      await supabase.from("blogs").update(payload).eq("id", editing.id);
     } else {
-      await supabase.from("blogs").insert([form]);
+      await supabase.from("blogs").insert([payload]);
     }
     setSaving(false);
     setShowForm(false);
@@ -192,14 +231,38 @@ function BlogsTab() {
             Content (full blog post)
             <textarea style={{ ...inputStyle, resize: "vertical", fontFamily: "monospace", fontSize: "0.9rem" }} name="content" rows={14} value={form.content} onChange={handleChange} placeholder="Write your full blog post here..." />
           </label>
-          <label style={{ display: "flex", alignItems: "center", gap: "0.75rem", color: "var(--muted-strong)", fontWeight: 800, cursor: "pointer" }}>
-            <input type="checkbox" name="published" checked={form.published} onChange={handleChange} style={{ width: "18px", height: "18px", accentColor: "var(--accent)", cursor: "pointer" }} />
-            Publish immediately
-          </label>
-          <div style={{ display: "flex", gap: "0.75rem" }}>
-            <button style={btnStyle} type="submit" disabled={saving}>{saving ? "Saving…" : editing ? "Update Post" : "Publish Post"}</button>
-            <button type="button" onClick={() => setShowForm(false)} style={{ ...btnStyle, background: "rgba(255,255,255,0.07)" }}>Cancel</button>
-          </div>
+            <label style={labelStyle}>
+              Publication Type *
+              <select
+                style={{ ...inputStyle, cursor: "pointer" }}
+                value={publishType}
+                onChange={e => setPublishType(e.target.value)}
+              >
+                <option value="publish_now">Publish Immediately</option>
+                <option value="schedule">Schedule Post</option>
+                <option value="draft">Save as Draft</option>
+              </select>
+            </label>
+
+            {publishType === "schedule" && (
+              <label style={labelStyle}>
+                Schedule Date & Time *
+                <input
+                  style={inputStyle}
+                  type="datetime-local"
+                  required
+                  value={scheduleDate}
+                  onChange={e => setScheduleDate(e.target.value)}
+                />
+              </label>
+            )}
+
+            <div style={{ display: "flex", gap: "0.75rem", marginTop: "0.5rem" }}>
+              <button style={btnStyle} type="submit" disabled={saving}>
+                {saving ? "Saving…" : editing ? "Update Post" : publishType === "draft" ? "Save Draft" : publishType === "schedule" ? "Schedule Post" : "Publish Post"}
+              </button>
+              <button type="button" onClick={() => setShowForm(false)} style={{ ...btnStyle, background: "rgba(255,255,255,0.07)" }}>Cancel</button>
+            </div>
         </form>
       </div>
     );
@@ -220,9 +283,29 @@ function BlogsTab() {
                 <div>
                   <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.35rem", flexWrap: "wrap" }}>
                     <span style={{ ...metaValue, fontSize: "1.1rem", fontWeight: 700 }}>{blog.title}</span>
-                    <span style={{ padding: "0.2rem 0.65rem", borderRadius: "999px", fontSize: "0.75rem", fontWeight: 800, background: blog.published ? "rgba(34,197,94,0.15)" : "rgba(255,255,255,0.07)", color: blog.published ? "#4ade80" : "var(--muted)" }}>
-                      {blog.published ? "Published" : "Draft"}
-                    </span>
+                    {(() => {
+                      const isDraft = !blog.published;
+                      const isScheduled = blog.published && new Date(blog.created_at) > new Date();
+                      if (isDraft) {
+                        return (
+                          <span style={{ padding: "0.2rem 0.65rem", borderRadius: "999px", fontSize: "0.75rem", fontWeight: 800, background: "rgba(255,255,255,0.07)", color: "var(--muted)" }}>
+                            Draft
+                          </span>
+                        );
+                      }
+                      if (isScheduled) {
+                        return (
+                          <span style={{ padding: "0.2rem 0.65rem", borderRadius: "999px", fontSize: "0.75rem", fontWeight: 800, background: "rgba(59,130,246,0.15)", color: "#60a5fa" }}>
+                            Scheduled ({new Date(blog.created_at).toLocaleDateString("en-IN", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })})
+                          </span>
+                        );
+                      }
+                      return (
+                        <span style={{ padding: "0.2rem 0.65rem", borderRadius: "999px", fontSize: "0.75rem", fontWeight: 800, background: "rgba(34,197,94,0.15)", color: "#4ade80" }}>
+                          Published
+                        </span>
+                      );
+                    })()}
                   </div>
                   {blog.category && <span style={{ ...metaLabel, display: "inline", textTransform: "none", letterSpacing: 0 }}>{blog.category} · </span>}
                   <span style={metaLabel}>{new Date(blog.created_at).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}</span>

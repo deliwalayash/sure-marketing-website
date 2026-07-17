@@ -11,6 +11,7 @@ export async function generateMetadata({ params }) {
     .select("title, excerpt, slug, category, created_at")
     .eq("slug", params.slug)
     .eq("published", true)
+    .lte("created_at", new Date().toISOString())
     .single();
   if (!data) return { title: "Blog | Sure Marketing" };
 
@@ -43,6 +44,7 @@ async function getBlog(slug) {
     .select("*")
     .eq("slug", slug)
     .eq("published", true)
+    .lte("created_at", new Date().toISOString())
     .single();
   return data;
 }
@@ -52,6 +54,7 @@ async function getRelatedPosts(slug) {
     .from("blogs")
     .select("title, slug, category")
     .eq("published", true)
+    .lte("created_at", new Date().toISOString())
     .neq("slug", slug)
     .limit(3);
   return data || [];
@@ -62,12 +65,12 @@ function renderContent(content) {
   if (!content) return null;
   return content.split("\n").map((line, i) => {
     const trimmed = line.trim();
-    if (!trimmed) return <div key={i} style={{ height: "0.75rem" }} />;
+    if (!trimmed) return <div key={i} style={{ height: "0.5rem" }} />;
 
     // Numbered heading like "1. Title" or "10. Title"
     if (/^\d+\.\s/.test(trimmed)) {
       return (
-        <h2 key={i} style={{ margin: "2rem 0 0.75rem", fontSize: "1.4rem", fontWeight: 800, color: "var(--text)", lineHeight: 1.25 }}>
+        <h2 key={i} style={{ margin: "2.75rem 0 1.25rem", fontSize: "1.6rem", fontWeight: 800, color: "var(--text)", lineHeight: 1.3 }}>
           {trimmed}
         </h2>
       );
@@ -76,7 +79,7 @@ function renderContent(content) {
     // All-caps short line = subheading
     if (trimmed.length < 60 && trimmed === trimmed.toUpperCase() && /[A-Z]/.test(trimmed)) {
       return (
-        <h3 key={i} style={{ margin: "1.5rem 0 0.5rem", fontSize: "0.78rem", fontWeight: 900, color: "var(--accent)", letterSpacing: "0.08em", textTransform: "uppercase" }}>
+        <h3 key={i} style={{ margin: "2rem 0 0.75rem", fontSize: "0.85rem", fontWeight: 900, color: "var(--accent)", letterSpacing: "0.08em", textTransform: "uppercase" }}>
           {trimmed}
         </h3>
       );
@@ -85,8 +88,8 @@ function renderContent(content) {
     // Bullet lines starting with - or •
     if (/^[-•]/.test(trimmed)) {
       return (
-        <div key={i} style={{ display: "flex", gap: "0.75rem", margin: "0.4rem 0", color: "var(--muted-strong)", fontSize: "1.02rem", lineHeight: 1.75 }}>
-          <span style={{ color: "var(--accent)", flexShrink: 0, marginTop: "0.1rem" }}>→</span>
+        <div key={i} style={{ display: "flex", gap: "0.75rem", margin: "0.6rem 0 0.8rem", color: "#ffffff", fontSize: "1.08rem", lineHeight: 1.8, fontWeight: 500 }}>
+          <span style={{ color: "var(--accent)", flexShrink: 0, marginTop: "0.15rem" }}>→</span>
           <span>{trimmed.replace(/^[-•]\s*/, "")}</span>
         </div>
       );
@@ -94,7 +97,7 @@ function renderContent(content) {
 
     // Regular paragraph
     return (
-      <p key={i} style={{ margin: "0 0 0.25rem", color: "var(--muted)", fontSize: "1.05rem", lineHeight: 1.85 }}>
+      <p key={i} style={{ margin: "0 0 1.25rem", color: "#ffffff", fontSize: "1.1rem", lineHeight: 1.85, fontWeight: 500 }}>
         {trimmed}
       </p>
     );

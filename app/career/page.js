@@ -24,6 +24,12 @@ export default function CareerPage() {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
     if (errors[name]) setErrors((prev) => ({ ...prev, [name]: "" }));
+
+    if (name === "email" && status === "otp-sent") {
+      setStatus("idle");
+      setOtp("");
+      setOtpError("");
+    }
   }
 
   function handleFile(e) {
@@ -150,61 +156,11 @@ export default function CareerPage() {
           {status === "success" ? (
             <div style={{ padding: "1.5rem", border: "1px solid rgba(34,197,94,0.3)", borderRadius: "20px", background: "rgba(34,197,94,0.08)" }}>
               <p style={{ color: "#4ade80", fontWeight: 800, fontSize: "1.1rem", margin: "0 0 0.5rem" }}>Application submitted! 🎉</p>
-              <p style={{ color: "var(--muted)", margin: 0, fontSize: "0.95rem" }}>A confirmation email has been sent to <strong style={{ color: "var(--text)" }}>{form.email || "your inbox"}</strong>. We will be in touch within 2–3 business days.</p>
-            </div>
-
-          ) : status === "otp-sent" || status === "otp-verified" ? (
-            <div style={{ display: "grid", gap: "1rem" }}>
-              <div style={{ padding: "1rem 1.25rem", border: "1px solid var(--line)", borderRadius: "16px", background: "rgba(168,85,247,0.07)" }}>
-                <p style={{ margin: 0, color: "var(--muted-strong)", fontSize: "0.92rem" }}>
-                  OTP sent to <strong style={{ color: "var(--accent)" }}>{form.email}</strong>. Check your inbox.
-                </p>
-              </div>
-
-              {status === "otp-verified" ? (
-                <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", color: "#4ade80", fontWeight: 700, fontSize: "0.95rem" }}>
-                  <span>✓</span> Email verified successfully
-                </div>
-              ) : (
-                <div style={{ display: "grid", gap: "0.75rem" }}>
-                  <label style={{ display: "grid", gap: "0.45rem", color: "var(--muted-strong)", fontWeight: 800, fontSize: "0.9rem" }}>
-                    Enter 6-digit OTP
-                    <input
-                      type="text"
-                      inputMode="numeric"
-                      maxLength={6}
-                      value={otp}
-                      onChange={e => { setOtp(e.target.value.replace(/\D/g, "")); setOtpError(""); }}
-                      placeholder="000000"
-                      style={{ border: `1px solid ${otpError ? "#f87171" : "var(--line)"}`, borderRadius: "12px", background: "rgba(3,3,7,0.74)", color: "var(--text)", font: "inherit", padding: "0.85rem 1rem", outline: "none", fontSize: "1.5rem", letterSpacing: "0.3em", textAlign: "center" }}
-                    />
-                  </label>
-                  {otpError && <p style={{ color: "#f87171", margin: 0, fontSize: "0.85rem" }}>{otpError}</p>}
-                  <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
-                    <button onClick={handleVerifyOtp} disabled={otpLoading} style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", minHeight: "48px", padding: "0 1.5rem", borderRadius: "999px", border: "none", background: "linear-gradient(135deg, #a855f7, #d946ef)", color: "#fff", fontWeight: 800, cursor: "pointer", fontSize: "1rem" }}>
-                      {otpLoading ? "Verifying…" : "Verify OTP"}
-                    </button>
-                    <button onClick={handleSendOtp} disabled={otpLoading} style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", minHeight: "48px", padding: "0 1.25rem", borderRadius: "999px", border: "1px solid var(--line)", background: "transparent", color: "var(--muted-strong)", fontWeight: 700, cursor: "pointer", fontSize: "0.9rem" }}>
-                      Resend OTP
-                    </button>
-                  </div>
-                </div>
-              )}
-
-              {status === "otp-verified" && (
-                <form onSubmit={handleSubmit} style={{ display: "grid", gap: "1rem", marginTop: "0.5rem" }}>
-                  <p style={{ color: "var(--muted)", margin: 0, fontSize: "0.9rem" }}>Your email is verified. Submit your application below.</p>
-                  {errors.submit && <p style={{ color: "#f87171", margin: 0, fontSize: "0.9rem" }}>{errors.submit}</p>}
-                  <button className="button" type="submit" disabled={status === "loading"}
-                    style={{ borderColor: "transparent", background: "linear-gradient(135deg, var(--accent), var(--accent-2))", color: "#fff", cursor: "pointer" }}>
-                    {status === "loading" ? "Uploading…" : "Submit Application"}
-                  </button>
-                </form>
-              )}
+              <p style={{ color: "var(--muted)", margin: 0, fontSize: "0.95rem" }}>We have received your application. We will contact you within 3–4 business days.</p>
             </div>
 
           ) : (
-            <form className="contact-form" onSubmit={handleSendOtp}>
+            <form className="contact-form" onSubmit={handleSubmit}>
               <label>
                 Full Name *
                 <input name="name" type="text" placeholder="Your name" value={form.name} onChange={handleChange} style={{ borderColor: errors.name ? "#f87171" : "" }} />
@@ -213,8 +169,40 @@ export default function CareerPage() {
 
               <label>
                 Email *
-                <input name="email" type="email" placeholder="you@email.com" value={form.email} onChange={handleChange} style={{ borderColor: errors.email ? "#f87171" : "" }} />
+                <input name="email" type="email" placeholder="you@email.com" value={form.email} onChange={handleChange} style={{ borderColor: errors.email ? "#f87171" : "" }} disabled={status === "otp-verified" || status === "loading"} />
                 {errors.email && <span style={{ color: "#f87171", fontSize: "0.82rem" }}>{errors.email}</span>}
+                
+                {status === "otp-sent" && (
+                  <div style={{ display: "grid", gap: "0.75rem", marginTop: "0.75rem", padding: "1.25rem", border: "1px solid var(--line)", borderRadius: "16px", background: "rgba(168,85,247,0.06)" }}>
+                    <label style={{ display: "grid", gap: "0.45rem", color: "var(--muted-strong)", fontWeight: 800, fontSize: "0.9rem" }}>
+                      Enter 6-digit OTP sent to {form.email}
+                      <input
+                        type="text"
+                        inputMode="numeric"
+                        maxLength={6}
+                        value={otp}
+                        onChange={e => { setOtp(e.target.value.replace(/\D/g, "")); setOtpError(""); }}
+                        placeholder="000000"
+                        style={{ border: `1px solid ${otpError ? "#f87171" : "var(--line)"}`, borderRadius: "12px", background: "rgba(3,3,7,0.85)", color: "var(--text)", font: "inherit", padding: "0.85rem 1rem", outline: "none", fontSize: "1.3rem", letterSpacing: "0.25em", textAlign: "center" }}
+                      />
+                    </label>
+                    {otpError && <p style={{ color: "#f87171", margin: 0, fontSize: "0.85rem" }}>{otpError}</p>}
+                    <div style={{ display: "flex", gap: "0.75rem" }}>
+                      <button type="button" onClick={handleVerifyOtp} disabled={otpLoading} style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", minHeight: "40px", flex: 1, borderRadius: "999px", border: "none", background: "linear-gradient(135deg, #a855f7, #d946ef)", color: "#fff", fontWeight: 800, cursor: "pointer", fontSize: "0.92rem" }}>
+                        {otpLoading ? "Verifying…" : "Verify OTP"}
+                      </button>
+                      <button type="button" onClick={handleSendOtp} disabled={otpLoading} style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", minHeight: "40px", padding: "0 1.25rem", borderRadius: "999px", border: "1px solid var(--line)", background: "transparent", color: "var(--muted-strong)", fontWeight: 700, cursor: "pointer", fontSize: "0.88rem" }}>
+                        Resend OTP
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {status === "otp-verified" && (
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", color: "#4ade80", fontWeight: 700, fontSize: "0.9rem", marginTop: "0.4rem" }}>
+                    <span>✓</span> Email verified successfully
+                  </div>
+                )}
               </label>
 
               <label>
@@ -292,10 +280,22 @@ export default function CareerPage() {
 
               {errors.submit && <p style={{ color: "#f87171", margin: 0, fontSize: "0.9rem" }}>{errors.submit}</p>}
 
-              <button className="button" type="submit" disabled={otpLoading}
-                style={{ borderColor: "transparent", background: "linear-gradient(135deg, var(--accent), var(--accent-2))", color: "#fff", cursor: "pointer" }}>
-                {otpLoading ? "Sending OTP…" : "Verify Email & Continue"}
-              </button>
+              {status === "idle" ? (
+                <button className="button" type="button" onClick={handleSendOtp} disabled={otpLoading}
+                  style={{ borderColor: "transparent", background: "linear-gradient(135deg, var(--accent), var(--accent-2))", color: "#fff", cursor: "pointer" }}>
+                  {otpLoading ? "Sending OTP…" : "Verify Email & Continue"}
+                </button>
+              ) : status === "otp-sent" ? (
+                <button className="button" type="button" disabled
+                  style={{ borderColor: "transparent", background: "var(--line)", color: "var(--muted)", cursor: "not-allowed", opacity: 0.6 }}>
+                  Please verify your OTP above
+                </button>
+              ) : (
+                <button className="button" type="submit" disabled={status === "loading"}
+                  style={{ borderColor: "transparent", background: "linear-gradient(135deg, var(--accent), var(--accent-2))", color: "#fff", cursor: "pointer" }}>
+                  {status === "loading" ? "Submitting Application…" : "Submit Application"}
+                </button>
+              )}
             </form>
           )}
           </div>
