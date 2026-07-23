@@ -150,7 +150,7 @@ export function BlogPreview() {
       <div className="section-heading split-heading">
         <div>
           <p className="eyebrow">Latest thinking</p>
-          <h2>Blog preview now, Supabase-powered posts later.</h2>
+          <h2>Insights & Growth Strategies.</h2>
         </div>
         <Link className="text-link" href="/blog">
           View all posts <ArrowRight size={16} />
@@ -174,7 +174,7 @@ export function CtaBand() {
     <section className="cta-band">
       <div>
         <p className="eyebrow">Next step</p>
-        <h2>Let's create the first premium version, then connect the admin system.</h2>
+        <h2>Ready to scale your business with measurable marketing?</h2>
       </div>
       <div className="hero-actions">
         <Link className="button primary" href="/contact">
