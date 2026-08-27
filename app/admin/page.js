@@ -172,6 +172,7 @@ function BlogsTab() {
   const [form, setForm] = useState({
     title: "",
     slug: "",
+    category: "Digital Marketing",
     excerpt: "",
     content: "",
     seo_title: "",
@@ -196,6 +197,7 @@ function BlogsTab() {
     setForm({
       title: "",
       slug: "",
+      category: "Digital Marketing",
       excerpt: "",
       content: "",
       seo_title: "",
@@ -210,6 +212,7 @@ function BlogsTab() {
     setForm({
       title: blog.title || "",
       slug: blog.slug || "",
+      category: blog.category || "Digital Marketing",
       excerpt: blog.excerpt || "",
       content: blog.content || "",
       seo_title: blog.seo_title || blog.title || "",
@@ -285,6 +288,7 @@ function BlogsTab() {
     const payload = {
       title: form.title.trim(),
       slug: form.slug.trim(),
+      category: form.category?.trim() || "Digital Marketing",
       excerpt: form.excerpt?.trim() || null,
       content: form.content?.trim() || null,
       image_url: form.image_url?.trim() || null,
@@ -343,86 +347,112 @@ function BlogsTab() {
 
       {/* LEFT COLUMN: New / Edit Blog Form */}
       <div style={adminCardStyle}>
-        <h2 style={{ margin: "0 0 1.5rem", fontSize: "1.5rem", fontWeight: 800, color: "#0f172a" }}>
-          {editing ? "Edit Blog" : "New Blog"}
-        </h2>
-
-        <form onSubmit={handleSave} style={{ display: "grid", gap: "1.1rem" }}>
-          <input
-            style={lightInputStyle}
-            name="title"
-            required
-            value={form.title}
-            onChange={handleChange}
-            placeholder="Title"
-          />
-
-          <input
-            style={lightInputStyle}
-            name="slug"
-            required
-            value={form.slug}
-            onChange={handleChange}
-            placeholder="Slug"
-          />
-
-          <textarea
-            style={{ ...lightInputStyle, resize: "vertical" }}
-            name="excerpt"
-            rows={3}
-            value={form.excerpt}
-            onChange={handleChange}
-            placeholder="Short description"
-          />
-
-          <textarea
-            style={{ ...lightInputStyle, resize: "vertical", fontFamily: "inherit" }}
-            name="content"
-            rows={10}
-            value={form.content}
-            onChange={handleChange}
-            placeholder="Full blog content"
-          />
-
-          <input
-            style={lightInputStyle}
-            name="seo_title"
-            value={form.seo_title}
-            onChange={handleChange}
-            placeholder="SEO title"
-          />
-
-          <textarea
-            style={{ ...lightInputStyle, resize: "vertical" }}
-            name="seo_description"
-            rows={3}
-            value={form.seo_description}
-            onChange={handleChange}
-            placeholder="SEO description"
-          />
-
-          <input
-            style={lightInputStyle}
-            name="image_url"
-            value={form.image_url}
-            onChange={handleChange}
-            placeholder="Image URL"
-          />
-
-          {/* File Upload with Preview */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
           <div>
+            <h2 style={{ margin: 0, fontSize: "1.5rem", fontWeight: 800, color: "#0f172a" }}>
+              {editing ? "Edit Blog Post" : "Create New Blog Post"}
+            </h2>
+            <p style={{ margin: "0.25rem 0 0", fontSize: "0.85rem", color: "#64748b" }}>
+              {editing ? `Editing: ${editing.title}` : "Fill in details to publish a new article"}
+            </p>
+          </div>
+          {editing && (
+            <button onClick={handleClear} type="button" style={{ ...clearBtnStyle, padding: "0.4rem 0.9rem", fontSize: "0.82rem" }}>
+              + New Post
+            </button>
+          )}
+        </div>
+
+        <form onSubmit={handleSave} style={{ display: "grid", gap: "1.25rem" }}>
+          
+          {/* Main Info */}
+          <div style={{ display: "grid", gap: "0.4rem" }}>
+            <label style={formLabelStyle}>
+              Blog Title <span style={{ color: "#ef4444" }}>*</span>
+            </label>
             <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageFileChange}
-              disabled={uploadingImg}
-              style={{ ...lightInputStyle, padding: "0.55rem 0.75rem", fontSize: "0.85rem", cursor: "pointer" }}
+              style={lightInputStyle}
+              name="title"
+              required
+              value={form.title}
+              onChange={handleChange}
+              placeholder="e.g. 10 Digital Marketing Strategies for 2026"
             />
-            {uploadingImg && <p style={{ color: "#2563eb", fontSize: "0.8rem", margin: "0.4rem 0 0" }}>Uploading image...</p>}
-            
-            {/* Live image indicator */}
-            <div style={{ marginTop: "0.6rem", display: "flex", alignItems: "center", gap: "0.75rem" }}>
-              <div style={{ width: "64px", height: "40px", borderRadius: "8px", overflow: "hidden", border: "1px solid #e2e8f0", background: "#f8fafc", flexShrink: 0 }}>
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+            <div style={{ display: "grid", gap: "0.4rem" }}>
+              <label style={formLabelStyle}>
+                URL Slug <span style={{ color: "#ef4444" }}>*</span>
+              </label>
+              <input
+                style={lightInputStyle}
+                name="slug"
+                required
+                value={form.slug}
+                onChange={handleChange}
+                placeholder="e.g. 10-digital-marketing-strategies"
+              />
+            </div>
+
+            <div style={{ display: "grid", gap: "0.4rem" }}>
+              <label style={formLabelStyle}>Category</label>
+              <input
+                style={lightInputStyle}
+                name="category"
+                value={form.category}
+                onChange={handleChange}
+                placeholder="e.g. Google Ads, SEO, Social Media"
+              />
+            </div>
+          </div>
+
+          <div style={{ display: "grid", gap: "0.4rem" }}>
+            <label style={formLabelStyle}>Excerpt / Short Summary</label>
+            <textarea
+              style={{ ...lightInputStyle, resize: "vertical" }}
+              name="excerpt"
+              rows={2}
+              value={form.excerpt}
+              onChange={handleChange}
+              placeholder="A brief 1-2 sentence overview shown on blog cards..."
+            />
+          </div>
+
+          {/* Featured Image Section */}
+          <div style={{ padding: "1rem", background: "#f8fafc", borderRadius: "14px", border: "1px solid #e2e8f0", display: "grid", gap: "0.75rem" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <label style={{ ...formLabelStyle, margin: 0, color: "#1e3a8a" }}>
+                🖼️ Featured Blog Image (Supabase Storage)
+              </label>
+              {uploadingImg && <span style={{ fontSize: "0.8rem", color: "#2563eb", fontWeight: 700 }}>Uploading to Supabase...</span>}
+            </div>
+
+            <div style={{ display: "grid", gap: "0.4rem" }}>
+              <span style={{ fontSize: "0.78rem", color: "#64748b" }}>Upload image from your computer:</span>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageFileChange}
+                disabled={uploadingImg}
+                style={{ ...lightInputStyle, padding: "0.5rem 0.75rem", fontSize: "0.85rem", cursor: "pointer", background: "#ffffff" }}
+              />
+            </div>
+
+            <div style={{ display: "grid", gap: "0.3rem" }}>
+              <span style={{ fontSize: "0.78rem", color: "#64748b" }}>Or paste an Image URL:</span>
+              <input
+                style={{ ...lightInputStyle, fontSize: "0.85rem", padding: "0.55rem 0.75rem" }}
+                name="image_url"
+                value={form.image_url}
+                onChange={handleChange}
+                placeholder="https://... or uploaded Supabase image URL"
+              />
+            </div>
+
+            {/* Image Preview */}
+            <div style={{ display: "flex", alignItems: "center", gap: "0.85rem", paddingTop: "0.25rem" }}>
+              <div style={{ width: "80px", height: "50px", borderRadius: "8px", overflow: "hidden", border: "1px solid #cbd5e1", background: "#ffffff", flexShrink: 0 }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={form.image_url || "/images/yash-about.png"}
@@ -430,12 +460,75 @@ function BlogsTab() {
                   style={{ width: "100%", height: "100%", objectFit: "cover" }}
                 />
               </div>
-              <span style={{ fontSize: "0.78rem", color: form.image_url ? "#16a34a" : "#64748b", fontWeight: 600 }}>
-                {form.image_url ? "Custom image attached" : "Default photo: Yash Deliwala"}
-              </span>
+              <div style={{ fontSize: "0.8rem" }}>
+                <span style={{ color: form.image_url ? "#16a34a" : "#64748b", fontWeight: 700, display: "block" }}>
+                  {form.image_url ? "✓ Custom image attached" : "Default fallback photo: Yash Deliwala"}
+                </span>
+                {form.image_url && (
+                  <button
+                    type="button"
+                    onClick={() => setForm(p => ({ ...p, image_url: "" }))}
+                    style={{ background: "none", border: "none", color: "#ef4444", padding: 0, fontSize: "0.75rem", cursor: "pointer", textDecoration: "underline", marginTop: "2px" }}
+                  >
+                    Remove custom image
+                  </button>
+                )}
+              </div>
             </div>
           </div>
 
+          {/* Full Content */}
+          <div style={{ display: "grid", gap: "0.4rem" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+              <label style={formLabelStyle}>Full Blog Content</label>
+              <span style={{ fontSize: "0.75rem", color: "#64748b" }}>Use &apos;1. Title&apos; for headings, &apos;- item&apos; for bullets</span>
+            </div>
+            <textarea
+              style={{ ...lightInputStyle, resize: "vertical", fontFamily: "inherit", minHeight: "180px" }}
+              name="content"
+              rows={10}
+              value={form.content}
+              onChange={handleChange}
+              placeholder="Write your complete blog post content here..."
+            />
+          </div>
+
+          {/* SEO Meta Fields Box */}
+          <div style={{ padding: "1.1rem", background: "#f0fdf4", borderRadius: "14px", border: "1px solid #bbf7d0", display: "grid", gap: "0.9rem" }}>
+            <div>
+              <label style={{ ...formLabelStyle, color: "#166534", display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                🎯 SEO Optimization (Meta Tags)
+              </label>
+              <p style={{ margin: "0.2rem 0 0", fontSize: "0.78rem", color: "#15803d" }}>
+                Customize how this post appears in Google search results and social previews.
+              </p>
+            </div>
+
+            <div style={{ display: "grid", gap: "0.3rem" }}>
+              <label style={{ ...formLabelStyle, fontSize: "0.82rem", color: "#166534" }}>SEO Meta Title</label>
+              <input
+                style={{ ...lightInputStyle, background: "#ffffff", borderColor: "#86efac" }}
+                name="seo_title"
+                value={form.seo_title}
+                onChange={handleChange}
+                placeholder="SEO Title (e.g. Best Digital Marketing Agency in Surat | Sure Marketing)"
+              />
+            </div>
+
+            <div style={{ display: "grid", gap: "0.3rem" }}>
+              <label style={{ ...formLabelStyle, fontSize: "0.82rem", color: "#166534" }}>SEO Meta Description</label>
+              <textarea
+                style={{ ...lightInputStyle, resize: "vertical", background: "#ffffff", borderColor: "#86efac" }}
+                name="seo_description"
+                rows={3}
+                value={form.seo_description}
+                onChange={handleChange}
+                placeholder="SEO Meta Description (summarizing the post for search engines)..."
+              />
+            </div>
+          </div>
+
+          {/* Published toggle */}
           <label style={{ display: "flex", alignItems: "center", gap: "0.6rem", fontSize: "0.95rem", fontWeight: 700, color: "#0f172a", cursor: "pointer", margin: "0.25rem 0" }}>
             <input
               type="checkbox"
@@ -444,7 +537,7 @@ function BlogsTab() {
               onChange={handleChange}
               style={{ width: "18px", height: "18px", accentColor: "#2563eb", cursor: "pointer" }}
             />
-            Publish this blog
+            Publish this blog post (Visible to public)
           </label>
 
           <div style={{ display: "flex", gap: "0.75rem", marginTop: "0.5rem" }}>
@@ -485,9 +578,16 @@ function BlogsTab() {
             {blogs.map(blog => (
               <div key={blog.id} style={blogCardItemStyle}>
                 <div>
-                  <span style={publishedBadgeStyle}>
-                    {blog.published ? "PUBLISHED" : "DRAFT"}
-                  </span>
+                  <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
+                    <span style={publishedBadgeStyle}>
+                      {blog.published ? "PUBLISHED" : "DRAFT"}
+                    </span>
+                    {blog.category && (
+                      <span style={{ fontSize: "0.72rem", color: "#64748b", fontWeight: 600, background: "#f1f5f9", padding: "0.15rem 0.5rem", borderRadius: "999px" }}>
+                        {blog.category}
+                      </span>
+                    )}
+                  </div>
                   <h3 style={{ margin: "0.45rem 0 0.25rem", fontSize: "1.05rem", fontWeight: 800, color: "#1e3a8a", lineHeight: 1.35 }}>
                     {blog.title}
                   </h3>
@@ -618,3 +718,10 @@ const deleteBtnStyle = {
   fontSize: "0.85rem",
   cursor: "pointer"
 };
+
+const formLabelStyle = {
+  fontSize: "0.88rem",
+  fontWeight: 700,
+  color: "#334155"
+};
+
