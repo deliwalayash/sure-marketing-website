@@ -24,64 +24,66 @@ export const footerLinkGroups = [
     title: "Company",
     links: [
       { label: "Home", href: "/" },
-      { label: "About", href: "/about" },
-      { label: "Portfolio", href: "/portfolio" },
-      { label: "Videos", href: "/videos" },
-      { label: "Career", href: "/career" },
-      { label: "Contact", href: "/contact" }
+      { label: "About Yash & Team", href: "/about" },
+      { label: "Client Portfolio", href: "/portfolio" },
+      { label: "Video Showcase", href: "/videos" },
+      { label: "Join Our Team (Careers)", href: "/career" },
+      { label: "Contact & Location", href: "/contact" }
     ]
   },
   {
-    title: "Services",
+    title: "Services in Surat",
     links: [
-      { label: "All Services", href: "/services" },
-      { label: "Google Ads Expert", href: "/google-ads-expert" },
-      { label: "Social Media Marketing", href: "/social-media" },
-      { label: "Price List", href: "/price-list" }
+      { label: "Google Ads Agency in Surat", href: "/google-ads-expert" },
+      { label: "Website Design in Surat", href: "/website-design" },
+      { label: "Social Media Marketing Surat", href: "/social-media" },
+      { label: "SEO Agency in Surat", href: "/seo-expert" },
+      { label: "All Marketing Packages", href: "/price-list" }
     ]
   },
   {
-    title: "Resources",
+    title: "Resources & Insights",
     links: [
-      { label: "Blog", href: "/blog" },
-      { label: "Free Strategy Call", href: "/contact" },
-      { label: "WhatsApp", href: contact.whatsapp }
+      { label: "Marketing Blog & Guides", href: "/blog" },
+      { label: "Book Free Strategy Call", href: "/contact" },
+      { label: "WhatsApp Direct Chat", href: contact.whatsapp },
+      { label: "Client Testimonials", href: "/testimonials" }
     ]
   }
 ];
 
 export const services = [
   {
-    title: "Performance Ads",
+    title: "Google Ads Agency Surat",
     slug: "google-ads-expert",
-    eyebrow: "Google Ads / Meta Ads",
+    eyebrow: "Google Ads / PPC Management",
     summary:
-      "Campaign systems built for lead quality, conversion tracking, and budget control.",
-    points: ["Search campaigns", "Remarketing", "Weekly optimization"]
+      "High-intent PPC search campaigns and Performance Max ads built for verified B2B/B2C leads and maximum ROAS.",
+    points: ["Search & Performance Max", "Conversion tracking", "Weekly ROAS optimization"]
   },
   {
-    title: "Social Growth",
+    title: "Social Media Marketing Surat",
     slug: "social-media",
-    eyebrow: "Content / Reels / Community",
+    eyebrow: "Instagram / Meta Ads / Content",
     summary:
-      "A consistent content engine that makes your brand look alive, sharp, and trusted.",
-    points: ["Content calendar", "Creative direction", "Profile management"]
+      "High-engagement reels, carousel campaigns, and targeted Meta ads that build brand authority and customer trust.",
+    points: ["Viral reel content", "Meta lead ads", "Community growth"]
   },
   {
-    title: "Conversion Websites",
-    slug: "services",
-    eyebrow: "Next.js / Landing Pages",
+    title: "Website Design in Surat",
+    slug: "website-design",
+    eyebrow: "Next.js / Responsive Web Design",
     summary:
-      "Fast dark-mode websites with strong sections, clear CTAs, and enquiry-first layouts.",
-    points: ["Responsive UI", "SEO structure", "Lead forms"]
+      "Fast, high-converting modern websites designed to capture high-intent leads and rank effortlessly on Google.",
+    points: ["Mobile-first responsive UI", "Built-in SEO structure", "Lead capture funnels"]
   },
   {
-    title: "Search Visibility",
-    slug: "services",
-    eyebrow: "SEO / Local Search",
+    title: "SEO Agency in Surat",
+    slug: "seo-expert",
+    eyebrow: "Google Ranking / Local Map Pack",
     summary:
-      "Practical SEO improvements that help people find your business when intent is high.",
-    points: ["On-page SEO", "Local SEO", "Content planning"]
+      "Strategic on-page SEO, technical audits, and local search visibility that rank your business on Google's 1st page.",
+    points: ["Google Map Pack SEO", "High-intent keyword ranking", "Authority link building"]
   }
 ];
 

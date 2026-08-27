@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Facebook, Instagram, Linkedin, MessageCircle, Phone } from "lucide-react";
 import { contact, footerLinkGroups } from "@/data/site";
 
@@ -7,9 +8,14 @@ export function Footer() {
     <footer className="footer">
       <div className="footer-inner">
         <div>
-          <Link className="brand" href="/">
-            <span className="brand-orbit">SM</span>
-            <span>Sure Marketing</span>
+          <Link className="brand" href="/" aria-label="Sure Marketing Home">
+            <Image
+              src="/images/logo.png"
+              alt="Sure Marketing"
+              width={200}
+              height={66}
+              className="brand-logo"
+            />
           </Link>
           <p>
             Dark, modern digital experiences backed by ads, content, search, and sharp reporting.
@@ -55,12 +61,25 @@ export function Footer() {
         <span>{contact.address}</span>
       </div>
 
-      <div className="floating-actions">
-        <a href={contact.whatsapp} aria-label="Chat on WhatsApp">
-          <MessageCircle size={21} />
+      {/* Mobile Bottom Sticky Bar (Call Now & WhatsApp) */}
+      <div className="mobile-bottom-bar">
+        <a href={contact.phoneHref} className="mobile-bar-btn call-btn" aria-label="Call Now">
+          <Phone size={19} />
+          <span>Call Now</span>
         </a>
-        <a href={contact.phoneHref} aria-label="Call Sure Marketing">
-          <Phone size={21} />
+        <a href={contact.whatsapp} className="mobile-bar-btn whatsapp-btn" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+          <MessageCircle size={19} />
+          <span>WhatsApp</span>
+        </a>
+      </div>
+
+      {/* Desktop Floating Action Buttons */}
+      <div className="desktop-floating-actions">
+        <a href={contact.whatsapp} target="_blank" rel="noopener noreferrer" className="desktop-fab whatsapp-fab" aria-label="Chat on WhatsApp">
+          <MessageCircle size={22} />
+        </a>
+        <a href={contact.phoneHref} className="desktop-fab phone-fab" aria-label="Call Sure Marketing">
+          <Phone size={22} />
         </a>
       </div>
     </footer>

@@ -23,15 +23,14 @@ export function Hero() {
         <div className="hero-copy">
           <div className="hero-kicker">
             <Sparkles size={16} />
-            Performance Marketing That Delivers
+            Digital Marketing &amp; IT Agency
           </div>
           <h1>
-            Top Digital{" "}
-            <span className="gradient-text">Marketing Agency.</span>
+            Top Digital Marketing &amp;{" "}
+            <span className="gradient-text">IT Solutions.</span>
           </h1>
           <p>
-            Sure Marketing blends performance ads, conversion-focused websites, SEO, and content into one premium
-            digital presence for modern businesses.
+            Sure Marketing blends high-performance ads, custom web &amp; IT solutions, SEO, and strategic branding into one powerful growth engine for modern businesses.
           </p>
           <div className="hero-actions">
             <Link className="button primary" href="/contact">
@@ -44,9 +43,9 @@ export function Hero() {
           </div>
           <div className="hero-social-proof">
             <div className="hero-avatars">
-              <span className="hero-avatar" style={{ background: "linear-gradient(135deg, #a855f7, #7c3aed)" }}>Y</span>
-              <span className="hero-avatar" style={{ background: "linear-gradient(135deg, #d946ef, #a855f7)" }}>S</span>
-              <span className="hero-avatar" style={{ background: "linear-gradient(135deg, #8b5cf6, #6366f1)" }}>M</span>
+              <span className="hero-avatar" style={{ background: "linear-gradient(135deg, #0284c7, #2563eb)" }}>Y</span>
+              <span className="hero-avatar" style={{ background: "linear-gradient(135deg, #38bdf8, #0284c7)" }}>S</span>
+              <span className="hero-avatar" style={{ background: "linear-gradient(135deg, #10b981, #0d9488)" }}>M</span>
             </div>
             <div className="hero-proof-text">
               <span>Trusted by 50+ businesses to drive real growth.</span>
@@ -238,21 +237,105 @@ export function Testimonials() {
 
 export function ServiceDetail({ title, eyebrow, intro, bullets }) {
   return (
-    <section className="section-block page-intro">
-      <p className="eyebrow">{eyebrow}</p>
-      <h1>{title}</h1>
-      <p>{intro}</p>
-      <div className="detail-list">
-        {bullets.map((item) => (
-          <div key={item}>
-            <TrendingUp size={20} />
-            <span>{item}</span>
+    <section className="section-block service-detail-hero">
+      <div className="service-detail-inner">
+        {eyebrow && (
+          <div className="hero-kicker" style={{ marginBottom: "0.85rem" }}>
+            <Sparkles size={15} />
+            {eyebrow}
           </div>
-        ))}
+        )}
+        <h1>{title}</h1>
+        {intro && <p className="service-detail-intro">{intro}</p>}
+
+        {bullets && bullets.length > 0 && (
+          <div className="service-bullets-grid">
+            {bullets.map((item) => (
+              <div className="service-bullet-item" key={item}>
+                <span className="bullet-icon-wrap">
+                  <CheckCircle2 size={18} />
+                </span>
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <div className="hero-actions" style={{ marginTop: "2rem" }}>
+          <Link className="button primary" href="/contact">
+            Discuss This Service <ArrowRight size={17} />
+          </Link>
+          <a className="button secondary" href={contact.whatsapp} target="_blank" rel="noopener noreferrer">
+            WhatsApp Us
+          </a>
+        </div>
       </div>
-      <Link className="button primary" href="/contact">
-        Discuss This Service
-      </Link>
+    </section>
+  );
+}
+
+export function LocationMap() {
+  return (
+    <section className="section-block map-section" style={{ width: "min(1200px, calc(100% - 2rem))", margin: "4rem auto 1rem" }}>
+      <div
+        style={{
+          background: "#ffffff",
+          border: "1px solid var(--line)",
+          borderRadius: "28px",
+          padding: "clamp(1.5rem, 3vw, 2.5rem)",
+          boxShadow: "0 10px 30px -5px rgba(15, 23, 42, 0.05)"
+        }}
+      >
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "1rem", flexWrap: "wrap", marginBottom: "1.5rem" }}>
+          <div>
+            <p className="eyebrow" style={{ marginBottom: "0.4rem" }}>Our Location</p>
+            <h2 style={{ fontSize: "clamp(1.4rem, 2.5vw, 1.85rem)", fontWeight: 900, color: "#0f172a", margin: 0 }}>
+              Visit Sure Marketing in Surat
+            </h2>
+            <p style={{ color: "var(--muted-strong)", marginTop: "0.35rem", fontSize: "0.95rem" }}>{contact.address}</p>
+          </div>
+          <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
+            <a
+              href="https://maps.google.com/?q=Sure+Marketing+Surat"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="button secondary"
+              style={{ padding: "0.6rem 1.25rem", fontSize: "0.88rem" }}
+            >
+              Get Directions ↗
+            </a>
+            <Link
+              href="/contact"
+              className="button primary"
+              style={{ padding: "0.6rem 1.25rem", fontSize: "0.88rem" }}
+            >
+              Book Strategy Call
+            </Link>
+          </div>
+        </div>
+
+        <div
+          style={{
+            width: "100%",
+            height: "420px",
+            borderRadius: "20px",
+            overflow: "hidden",
+            border: "1px solid var(--line)",
+            background: "#f1f5f9"
+          }}
+        >
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3721.3232854357366!2d72.76660747681186!3d21.13952898053771!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xa4c04785ca442b21%3A0x27461d81a67074fa!2sSure%20Marketing!5e0!3m2!1sen!2sin!4v1787812661293!5m2!1sen!2sin"
+            width="100%"
+            height="100%"
+            style={{ border: 0, display: "block" }}
+            allowFullScreen=""
+            loading="lazy"
+            referrerPolicy="strict-origin-when-cross-origin"
+            title="Sure Marketing Office Location"
+          />
+        </div>
+      </div>
     </section>
   );
 }

@@ -1,5 +1,8 @@
 import { supabase } from "@/lib/supabase";
 
+export const revalidate = 60;
+export const dynamic = "force-dynamic";
+
 const baseUrl = "https://www.suremarketing.in";
 
 const staticRoutes = [
@@ -7,6 +10,8 @@ const staticRoutes = [
   { url: "/about", priority: 0.8, changeFrequency: "monthly" },
   { url: "/services", priority: 0.9, changeFrequency: "monthly" },
   { url: "/google-ads-expert", priority: 0.9, changeFrequency: "monthly" },
+  { url: "/website-design", priority: 0.9, changeFrequency: "monthly" },
+  { url: "/seo-expert", priority: 0.9, changeFrequency: "monthly" },
   { url: "/social-media", priority: 0.9, changeFrequency: "monthly" },
   { url: "/portfolio", priority: 0.8, changeFrequency: "monthly" },
   { url: "/videos", priority: 0.7, changeFrequency: "monthly" },
